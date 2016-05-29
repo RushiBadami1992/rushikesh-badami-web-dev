@@ -22,7 +22,66 @@
         return api;
         
         function findWidgetsForPageId(pageId) {
-            return widgets;
+            var resultSet=[];
+            for(var i in widgets)
+            {
+                if(widgets[i].pageId==pageId)
+                {
+                    resultSet.push(widgets[i]);
+                }
+            }
+            return resultSet;
         }
+      function createWidget(pageId, widget)
+      {
+          var widget={
+                        _id:widget._id,
+                         widgetTypes:widget.widgetTypes,
+                         pageId:widget.pageId,
+                         size:widget.size,
+                         text:widget.text
+          };
+          widgets.push(widget);
+          return widgets;
+      }
+        function  findWidgetById(widgetId) {
+            for(var i in widgets)
+            {
+                if(widgets[i]._id===widgetId)
+                {
+                    return widgets[i];
+                }
+            }
+            return null;
+
+        }
+        function updateWidget(widgetId, widget)
+        {
+            for(var i in widgets )
+            {
+                if(widgets[i]._id===widgetId)
+                {
+                    widgets[i].widgetType=widgetType;
+                    widgets[i].pageId=widget.pageId;
+                    widgets[i].size=widget.size;
+                    widgets[i].text=widget.text;
+                    return true;
+                }
+            }
+            return false;
+        }
+        function deleteWidget(widgetId)
+        {
+            for(var i in widgets)
+            {
+                if(widgets[i]._id==widgetId)
+                {
+                    widgets.slice(i,1);
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 })();

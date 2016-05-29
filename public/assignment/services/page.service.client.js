@@ -47,7 +47,7 @@
     {
         for(var i in pages)
         {
-            if(pages[i]._ID===pageId)
+            if(pages[i]._id===pageId)
             {
                 return pages[i];
             }
