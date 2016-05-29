@@ -18,7 +18,10 @@
     function WidgetService() {
         var api = {
             findWidgetsForPageId: findWidgetsForPageId,
-            createWidget:createWidget
+            createWidget:createWidget,
+            findWidgetById:findWidgetById,
+            updateWidget:updateWidget,
+            deleteWidget:deleteWidget
         };
         return api;
         
@@ -37,11 +40,11 @@
       {
           var widget={
                         _id:(new Date()).getTime()+"",
-                         widgetTypes:widgetTypes,
+                         widgetTypes:widgetType,
                          pageId:pageId
           };
           widgets.push(widget);
-          return widgets;
+          return widget;
       }
         function  findWidgetById(widgetId) {
             for(var i in widgets)
@@ -60,7 +63,7 @@
             {
                 if(widgets[i]._id===widgetId)
                 {
-                    widgets[i].widgetType=widgetType;
+                    widgets[i].widgetType=widget.widgetType;
                     widgets[i].pageId=widget.pageId;
                     widgets[i].size=widget.size;
                     widgets[i].text=widget.text;
