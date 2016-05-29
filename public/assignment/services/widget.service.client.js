@@ -17,7 +17,8 @@
 
     function WidgetService() {
         var api = {
-            findWidgetsForPageId: findWidgetsForPageId
+            findWidgetsForPageId: findWidgetsForPageId,
+            createWidget:createWidget
         };
         return api;
         
@@ -32,14 +33,12 @@
             }
             return resultSet;
         }
-      function createWidget(pageId, widget)
+      function createWidget(pageId, widgetType)
       {
           var widget={
-                        _id:widget._id,
-                         widgetTypes:widget.widgetTypes,
-                         pageId:widget.pageId,
-                         size:widget.size,
-                         text:widget.text
+                        _id:(new Date()).getTime()+"",
+                         widgetTypes:widgetTypes,
+                         pageId:pageId
           };
           widgets.push(widget);
           return widgets;

@@ -2,48 +2,57 @@
     angular
         .module("WebAppMaker")
         .controller("LoginController", LoginController)
-        .controller("ProfileController", ProfileController);
+        .controller("ProfileController", ProfileController)
+        .controller("RegisterController",RegisterController);
+    
+    function LoginController($location, UserService) {
+        var vm = this;
 
-    var users = [
-        {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
-        {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
-        {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
-        {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
-    ];
+        vm.login = function(username, password) {
+            var user = UserService.findUserByUsernameAndPassword(username, password);
+            if(user) {
+                $location.url("/profile/" + user._id);
+            } else {
+                vm.error = "User not found";
+            }
+        }
+    }
 
-    function ProfileController($routeParams) {
+    function ProfileController($location,$routeParams, UserService) {
         var vm = this;
         vm.updateUser = updateUser;
 
         var id = $routeParams.id;
-        var index = -1;
-        for(var i in users) {
-            if(users[i]._id === id) {
-                vm.user = users[i];
-                index = i;
-            }
+
+        function init() {
+            vm.user = UserService.findUserById(id);
         }
+        init();
 
         function updateUser(newUser) {
-            console.log(newUser);
-            users[index].firstName = newUser.firstName;
-            users[index].lastName = newUser.lastName;
+            if(UserService.updateUser(id, newUser))
+            {
+                $location.url("/profile/"+id);
+            }
+            else
+            {
+                vm.error="Update failed";
+            }
         }
     }
-
-    function LoginController($location) {
-        var vm = this;
-
-        vm.login = function(username, password) {
-            var currentUser = null;
-            for(var i in users) {
-                if(users[i].username === username && users[i].password === password) {
-                    currentUser = users[i];
-                    $location.url("/profile/"+users[i]._id);
-                    break;
-                } else {
-                    vm.error = "User not found";
-                }
+    function RegisterController($location,UserService)
+    {
+        var vm=this;
+        vm.register=function(username,password,rpassword)
+        {
+            var user=UserService.createUser(username,password,rpassword);
+            if(user)
+            {
+                $location.url("/profile/"+user._id);
+            }
+            else
+            {
+                vm.error="Registration failed due to incorrect passwords";
             }
         }
     }

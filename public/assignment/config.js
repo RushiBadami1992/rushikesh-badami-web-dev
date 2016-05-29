@@ -28,6 +28,11 @@
                 controller: "WebsiteListController",
                 controllerAs: "model"
             })
+            .when("/user/:userId/website/new",{
+                templateUrl:"views/website/website-new.view.client.html",
+                controller:"NewWebsiteController",
+                controllerAs:"model"
+            })
             .when("/user/:userId/website/:websiteId/page",{
               templateUrl:"views/page/page-list.view.client.html",
                controller:"PageListController",
@@ -52,6 +57,11 @@
             .when("/user/:userId/website/:websiteId/page/:pageId/widget", {
                 templateUrl: "views/widget/widget-list.view.client.html",
                 controller: "WidgetListController",
+                controllerAs: "model"
+            })
+            .when("/user/:userId/website/:websiteId/page/:pageId/widget/:widgetId", {
+                templateUrl: "views/widget/widget-edit.view.client.html",
+                controller: "EditWidgetController",
                 controllerAs: "model"
             })
             .otherwise({

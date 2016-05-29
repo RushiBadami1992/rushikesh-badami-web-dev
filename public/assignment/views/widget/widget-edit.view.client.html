@@ -1,0 +1,70 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="navbar-text pull-left">
+                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="navbar-link">
+                  <span class="glyphicon glyphicon-chevron-left">
+                  </span>
+                </a>
+            </p>
+            <a class="navbar-brand">
+          <b > Widget Edit </b>
+            </a>
+            <p class="navbar-text pull-right">
+                <a ng-click="model.updateWidget()" class="navbar-link">
+                  <span class="glyphicon glyphicon-ok">
+                  </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div ng-switch="model.widget.widgetType">
+        <div ng-switch-when="HEADER">
+            <ng-include src="'views/widget/widget-heading.view.client.html'">
+        </div>
+        <div ng-switch-when="IMAGE">
+            <ng-include src="'views/widget/widget-image.view.client.html'">
+        </div>
+        <div ng-switch-when="YOUTUBE">
+            <ng-include src="'views/widget/widget-youtube.view.client.html'">
+        </div>
+        <div ng-switch-when="LABEL">
+            LABEL
+        </div>
+        <div ng-switch-when="BUTTON">
+            BUTTON
+        </div>
+        <div ng-switch-when="DATATABLE">
+            DATATABLE
+        </div>
+        <div ng-switch-when="REPEATER">
+            REPEATER
+        </div>
+        <div ng-switch-when="LINK">
+            LINK
+        </div>
+        <div ng-switch-when="HTML">
+            HTML
+        </div>
+        <div ng-switch-when="TEXT">
+            TEXT
+        </div>
+
+
+    </div>
+
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="navbar-text pull-right">
+                <a href="#/user/{{model.userId}}" class="navbar-link">
+                  <span class="glyphicon glyphicon-user">
+                  </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
