@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="viewport" content="initial-scale=1.25, user-scalable = no">
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/assignment/css/style.css" rel="stylesheet"/>
-</head>
-<body>
+
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -24,7 +13,7 @@
               <b> New Page</b>
             </a>
             <p class="navbar-text pull-right">
-                <a href="/assignment/page/page-list.html" class="navbar-link">
+                <a  ng-click="model.createPage(name, description)" class="navbar-link">
                   <span class="glyphicon glyphicon-ok">
                   </span>
                 </a>
@@ -38,7 +27,8 @@
         <form>
             <div class="form-group">
                 <label for="website-name">Name</label>
-                <input type="text"
+                <input ng-model="name"
+                        type="text"
                        class="form-control"
                        id="page-name"
                        value=""
@@ -46,7 +36,8 @@
             </div>
             <div class="form-group">
                 <label for="website-description">Title</label>
-                <input type="text"
+                <input ng-model="description"
+                        type="text"
                        class="form-control"
                        id="page-title"
                        value=""
@@ -74,5 +65,3 @@
     </div>
 </nav>
 
-</body>
-</html>
