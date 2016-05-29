@@ -16,7 +16,9 @@
         var api = {
             createWebsite: createWebsite,
             findWebsitesForUserId: findWebsitesForUserId,
-            deleteWebsite: deleteWebsite
+            deleteWebsite: deleteWebsite,
+            findWebsiteById :findWebsiteById,
+            updateWebsite:updateWebsite
         };
         return api;
 
@@ -50,5 +52,33 @@
             }
             return resultSet;
         }
+
+        function findWebsiteById(websiteId)
+        {
+        for(var i in websites){
+            if(websites[i]._id===websiteId)
+            {
+                  return websites[i];
+
+            }
+
+
+        }
+            return null;
+        }
+    }
+    function updateWebsite(websiteId,website)
+    {
+        for(var i in websites)
+        {
+            if(websites[i]._id===websiteId)
+            {
+                websites[i].name=website.name;
+                websites[i].developerId=website.developerId;
+                return true;
+            }
+
+        }
+        return false;
     }
 })();
