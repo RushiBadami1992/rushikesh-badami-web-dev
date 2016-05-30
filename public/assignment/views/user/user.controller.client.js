@@ -11,7 +11,7 @@
         vm.login = function(username, password) {
             var user = UserService.findUserByUsernameAndPassword(username, password);
             if(user) {
-                $location.url("/profile/" + user._id);
+                $location.url("/user/" + user._id);
             } else {
                 vm.error = "User not found";
             }
@@ -32,7 +32,7 @@
         function updateUser(newUser) {
             if(UserService.updateUser(id, newUser))
             {
-                $location.url("/profile/"+id);
+                $location.url("/user/"+id);
             }
             else
             {
@@ -48,7 +48,7 @@
             var user=UserService.createUser(username,password,rpassword);
             if(user)
             {
-                $location.url("/profile/"+user._id);
+                $location.url("/user/"+user._id);
             }
             else
             {

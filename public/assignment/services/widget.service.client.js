@@ -40,7 +40,7 @@
       {
           var widget={
                         _id:(new Date()).getTime()+"",
-                         widgetTypes:widgetType,
+                         widgetType:widgetType,
                          pageId:pageId
           };
           widgets.push(widget);
@@ -74,11 +74,12 @@
         }
         function deleteWidget(widgetId)
         {
+
             for(var i in widgets)
             {
                 if(widgets[i]._id==widgetId)
                 {
-                    widgets.slice(i,1);
+                    widgets.splice(i,1);
                     return true;
                 }
             }

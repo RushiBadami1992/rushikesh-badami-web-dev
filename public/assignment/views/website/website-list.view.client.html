@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">
-                Websites
+            <b>    Websites </b>
             </a>
             <p class="navbar-text pull-right">
                 <a href="#/user/{{model.userId}}/website/new" class="navbar-link">
@@ -14,7 +14,7 @@
     </div>
 </nav>
 
-{{model.websites}}
+
 
 <div class="container">
     <ul class="list-group">
@@ -22,9 +22,14 @@
             <a href="#/user/{{website.developerId}}/website/{{website._id}}/page">
                 {{website.name}}
             </a>
+            <a href="#" class="pull-right">
+                <span class="glyphicon glyphicon-play" ></span>
+            </a>
+
             <a href="#/user/{{website.developerId}}/website/{{website._id}}" class="pull-right">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
+
         </li>
     </ul>
 </div>
@@ -39,7 +44,7 @@
             <div class="col-xs-3 text-center">
             </div>
             <div class="col-xs-3 text-center">
-                <a href="/assignment/user/profile.html">
+                <a href="#/user/{{model.userId}}">
                     <span class="glyphicon glyphicon-user"></span>
                 </a>
             </div>
