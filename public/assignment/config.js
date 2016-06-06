@@ -5,9 +5,9 @@
 
     function Config($routeProvider) {
         $routeProvider
-            .when("/", {
-                templateUrl: "views/home.html"
-            })
+            /*.when("/", {
+                templateUrl: "views/user/login.view.client.html"
+            })*/
             .when("/user/:userId/website/:websiteId/page/:pageId/widget/:widgetId/search", {
                 templateUrl: "views/widget/widget-flickr-search.view.client.html",
                 controller: "FlickrImageSearchController",
