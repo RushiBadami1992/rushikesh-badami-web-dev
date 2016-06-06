@@ -70,7 +70,7 @@ module.exports = function(app) {
 
     function deletePage(req,res)
     {
-        var id=req.params.pageId;
+        var pageId=req.params.pageId;
         for(var i in pages)
         {
             if(pages[i]._id===pageId)

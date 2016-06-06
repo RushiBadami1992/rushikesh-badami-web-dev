@@ -10,11 +10,15 @@
     <link href="/assignment/css/style.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+    <link href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" rel="stylesheet">
     <script src="app.js"></script>
     <script src="config.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <link href="css/jquery-ui.css" rel="stylesheet"/> <!-- Adding CSS -->
       <script src="views/user/user.controller.client.js"></script>
     <script src="views/website/website.controller.client.js"></script>
-    <script src="views/widget/widget-list.controller.client.js"></script>
+    <script src="views/widget/widget.controller.client.js"></script>
     <script src="views/page/page.controller.client.js"></script>
     <script src="views/widget/widget-flickr-search.controller.client.js"></script>
     <script src="services/user.service.client.js"></script>
@@ -22,7 +26,15 @@
     <script src="services/page.service.client.js"></script>
     <script src="services/widget.service.client.js"></script>
     <script src="services/flickr.service.client.js"></script>
+    <!--<script>
+        $(function() {
+            $( "#sortable" ).sortable();
+            $( "#sortable" ).disableSelection();
+        });
+    </script>-->
 </head>
+
+
 <body>
     <div ng-view></div>
 </body>

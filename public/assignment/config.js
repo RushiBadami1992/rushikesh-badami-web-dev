@@ -8,7 +8,7 @@
             .when("/", {
                 templateUrl: "views/home.html"
             })
-            .when("/flickr", {
+            .when("/user/:userId/website/:websiteId/page/:pageId/widget/:widgetId/search", {
                 templateUrl: "views/widget/widget-flickr-search.view.client.html",
                 controller: "FlickrImageSearchController",
                 controllerAs: "model"
@@ -48,9 +48,29 @@
                 controller:"PageListController",
                 controllerAs:"model"
             })
-            .when("/user/:uid/website/:wid/page/:pid/widget", {
+            .when("/user/:userId/website/:websiteId/page/:pageId/widget", {
                 templateUrl: "views/widget/widget-list.view.client.html",
                 controller: "WidgetListController",
+                controllerAs: "model"
+            })
+            .when("/user/:userId/website/:websiteId/page/:pageId/widget/new", {
+                templateUrl: "views/widget/widget-chooser.view.client.html",
+                controller: "ChooseWidgetController",
+                controllerAs: "model"
+            })
+            .when("/user/:userId/website/:websiteId/page/:pageId/widget/:widgetId", {
+                templateUrl: "views/widget/widget-edit.view.client.html",
+                controller: "EditWidgetController",
+                controllerAs: "model"
+            })
+            .when("/user/:userId/website/:websiteId/page/new",{
+                templateUrl:"views/page/page-new.view.client.html",
+                controller:"NewPageController",
+                controllerAs:"model"
+            })
+            .when("/user/:userId/website/:websiteId/page/:pageId", {
+                templateUrl: "views/page/page-edit.view.client.html",
+                controller: "EditPageController",
                 controllerAs: "model"
             })
             .otherwise({
