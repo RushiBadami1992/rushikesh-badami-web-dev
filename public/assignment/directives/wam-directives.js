@@ -57,8 +57,6 @@
                         start: start,
                         end: end
                     });
-                    console.log(start);
-                    console.log(end);
                 }
             });
         }

@@ -31,7 +31,7 @@ module.exports = function(app,models) {
         var newWidget=req.body;
         var pageId=req.params.pageId;
         var prio=-1;
-        var prio=-1;
+
         widgetModel.findAllWidgetsForPage(pageId)
             .then(
                 function (widgetList) {
@@ -179,10 +179,13 @@ module.exports = function(app,models) {
          var pageId = req.params.pageId;
          var first = req.query['start'];
          var second = req.query['end'];
+         console.log(first);
+         console.log(second)
          widgetModel.findAllWidgetsForPage(pageId)
              .then(function (widgetList) {
                  widgetList.forEach(function (widget) {
                      if (first < second) {
+                         console.log("In server reorder widget");
                          if (widget.priority > first && widget.priority <= second) {
                              widget.priority--;
                              widget.save(function () {

@@ -40,7 +40,7 @@
             var url = "/api/widget/" + widgetID;
             return $http.delete(url);
         }
-        function reorderWidget(start, end,pageId) {
+        function reorderWidget(pageId,start, end) {
             var url = "/api/page/" + pageId + "/widget?start=" + start + "&end=" + end;
             return $http.put(url);
         }
