@@ -1,10 +1,11 @@
 /**
  * Created by rushi on 6/5/16.
  */
-module.exports = function(app) {
+module.exports = function(app,models) {
     var multer = require('multer');
     var upload = multer({ dest: __dirname +'/../../public/uploads'});
 
+    var widgetModel = models.widgetModel;
 
     var widgets = [
         { "_id": "123", "widgetType": "HEADER", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -23,84 +24,123 @@ module.exports = function(app) {
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
     app.post("/api/upload", upload.single('myFile'), uploadImage);
-
+    app.put("/api/page/:pageId/widget", reorderWidget);
     function createWidget(req,res)
     {
-        var widget=req.body;
-        widget.pageId=req.params.pageId;
-        widgets.push(widget);
-        res.send(widgets);
+
+        var newWidget=req.body;
+        var pageId=req.params.pageId;
+        var prio=-1;
+        var prio=-1;
+        widgetModel.findAllWidgetsForPage(pageId)
+            .then(
+                function (widgetList) {
+                    widgetList.forEach(function(widget){
+                        if(widget.priority>prio){
+                            prio=widget.priority;
+                        }
+                    });
+                    prio++;
+                    newWidget.priority=prio;
+                    widgetModel
+                        .createWidget(pageId,newWidget)
+                        .then(
+                            function(widget) {
+                                res.json(widget);
+                            },
+                            function(error) {
+                                res.statusCode(400).send(error);
+                            }
+                        )
+                },
+                function () {
+                    newWidget.priority=prio;
+                    widgetModel
+                        .createWidget(pageId,newWidget)
+                        .then(
+                            function(widget) {
+                                res.json(widget);
+                            },
+                            function(error) {
+                                res.statusCode(400).send(error);
+                            }
+                        )
+                });
+
     }
+
      function findAllWidgetsForPage(req,res)
      {
          var pageId=req.params.pageId;
-         console.log("This"+pageId);
-         var result=[];
-         for(var i in widgets)
-         {
-             if(widgets[i].pageId===pageId)
-             {
-                 result.push(widgets[i]);
-             }
-         }
-         res.send(result);
+   //      console.log("This"+pageId);
+         widgetModel
+             .findAllWidgetsForPage(pageId)
+             .then(
+                 function(widgets) {
+                 //    console.log("Widgets server.js")
+                  //    console.log(widgets);
+                     res.json(widgets);
+                 },
+                 function(error) {
+                     res.statusCode(400).send(error);
+                 }
+             )
+
      }
     function findWidgetById(req,res)
     {
         var widgetId=req.params.widgetId;
-        console.log("Inside findWidgetById");
-        for(var i in widgets)
-        {
-            console.log(widgets[i].url);
-            if(widgets[i]._id===widgetId)
-            {
-                console.log(widgets[i]);
-                console.log(widgetId);
-                res.send(widgets[i]);
-                return;
-            }
-        }
-        res.send({});
-        console.log("--------------");
+       // console.log("Inside findWidgetById");
+        widgetModel
+            .findWidgetById(widgetId)
+            .then(
+                function(widget) {
+                   // console.log(widget);
+                    res.json(widget);
+                },
+                function(error) {
+                    res.statusCode(404).send(error);
+                }
+            )
+        
     }
     function deleteWidget(req,res)
     {
         var widgetId=req.params.widgetId;
         console.log("In delete server");
         console.log(widgetId)
-        for(var i in widgets )
-        {
 
-            if(widgets[i]._id === widgetId)
-            {
-                console.log("In delete server");
-                widgets.splice(i,1);
-                res.send(200);
-                return;
-            }
-        }
+        widgetModel
+            .deleteWidget(widgetId)
+            .then(
+                function(stats) {
+                    console.log(stats);
+                    res.send(200);
+                },
+                function(error) {
+                    res.statusCode(404).send(error);
+                }
+            );
+
     }
     function updateWidget(req,res)
     {
         var widgetId = req.params.widgetId;
         var updatedWidget = req.body;
-        console.log("Update widget");
-        console.log(updatedWidget);
-        for (var i in widgets)  {
-            if (widgets[i]._id === widgetId)
-            {
-                widgets[i].pageId = updatedWidget.pageId;
-                widgets[i].text = updatedWidget.text;
-                widgets[i].name = updatedWidget.name;
-                widgets[i].size = updatedWidget.size;
-                widgets[i].url = updatedWidget.url;
-                widgets[i].width = updatedWidget.width+"%";
-                res.send(200);
-                return;
-            }
+         //console.log(updatedWidget);
+        widgetModel
+            .updateWidget(widgetId, updatedWidget)
+            .then(
+                function(stats) {
+                    console.log(stats);
+                    res.send(200);
+                },
+                function(error) {
+                    res.statusCode(404).send(error);
+                }
+            );
 
-        }
-        res.send(400);
+
     }
    function uploadImage(req,res)
    {
@@ -116,18 +156,63 @@ module.exports = function(app) {
        var pageId        = req.body.pageId;
        var websiteId     = req.body.websiteId;
        var width         = req.body.width;
-
+       var widget=req.body;
+       widget.url="/uploads/"+filename;
         console.log("in function upload image");
-       for (var i in widgets)
-       {
-           if(widgets[i]._id===widgetId)
-           {
-               widgets[i].url="/uploads/"+filename;
-               widgets[i].width=width;
-           }
-       }
-        console.log("upload Image");
-    //   res.send(200);
+       widgetModel
+           .updateWidget(widgetId, widget)
+           .then(
+               function(stats) {
+                   console.log(stats);
+                   res.send(200);
+               },
+               function(error) {
+                   res.statusCode(404).send(error);
+               }
+           );
+
+       //   res.send(200);
        res.redirect("/assignment/#/user/" +userId+ "/website/" +websiteId+ "/page/" +pageId+ "/widget/" +widgetId);
    }
+     function reorderWidget(req,res) {
+         console.log("In server reorder widget");
+         var pageId = req.params.pageId;
+         var first = req.query['start'];
+         var second = req.query['end'];
+         widgetModel.findAllWidgetsForPage(pageId)
+             .then(function (widgetList) {
+                 widgetList.forEach(function (widget) {
+                     if (first < second) {
+                         if (widget.priority > first && widget.priority <= second) {
+                             widget.priority--;
+                             widget.save(function () {
+                             });
+                         }
+                         else if (widget.priority == first) {
+                             widget.priority = second;
+                             widget.save(function () {
+                             });
+                         }
+
+                     }
+                     else {
+                         if (widget.number >= second && widget.number < first) {
+                             widget.priority++;
+                             widget.save(function () {
+                             });
+                         }
+                         else if (widget.priority == first) {
+                             widget.priority = second;
+                             widget.save(function () {
+                             });
+                         }
+                     }
+
+                 });
+                 res.send(200);
+             }, function (err) {
+                 res.statusCode(404).send(err);
+             })
+     }
+
 };

@@ -22,6 +22,8 @@
                 .findWebsiteById(id,$http)
                 .then(function (response) {
                     vm.website=response.data;
+                    //vm.website= vm.website[0];
+                    //console.log(vm.website);
                 });
         }
         init();
@@ -41,21 +43,26 @@
                 );
 
         }
-
+        //console.log(vm.website);
         function updateWebsite(website) {
-            WebsiteService
-                .updateWebsite(id,website,$http)
-                .then(
-                    function(response) {
-                        vm.success = "Updated website successfully";
-                        $location.url("/user/" +vm.userId+"/website");
-                    },
-                    function(error) {
-                        vm.error = "Unable to update website";
-                    }
-                );
+            if(website.name) {
+                WebsiteService
+                    .updateWebsite(id, website, $http)
+                    .then(
+                        function (response) {
+                            vm.success = "Updated website successfully";
+                            $location.url("/user/" + vm.userId + "/website");
+                        },
+                        function (error) {
+                            vm.error = "Unable to update website";
+                        }
+                    );
 
-
+            }
+            else
+            {
+                vm.error="Name field is required";
+            }
         }
     }
     function WebsiteListController($routeParams, WebsiteService,$http) {
@@ -77,15 +84,21 @@
         vm.createWebsite = createWebsite;
 
         function createWebsite(name,description) {
-            WebsiteService
-                .createWebsite(vm.userId,name, description,$http)
-                .then(function (response) {
-                    var website = response.data;
-                    console.log("In this function");
-                    if (website) {
-                        $location.url("/user/" +website.developerId+"/website");
-                    }
-                });
+            if(name) {
+                WebsiteService
+                    .createWebsite(vm.userId, name, description, $http)
+                    .then(function (response) {
+                        var website = response.data;
+                        console.log("In this function");
+                        if (website) {
+                            $location.url("/user/" + website._user + "/website");
+                        }
+                    });
+            }
+            else
+            {
+                vm.error="Name field is required";
+            }
         }
     }
     

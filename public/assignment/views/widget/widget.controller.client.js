@@ -17,7 +17,7 @@
         vm.websiteId=$routeParams.websiteId;
         vm.userId=$routeParams.userId;
         console.log("Userid"+vm.pageId);
-
+        vm.sort = sort;
         function init() {
             WidgetService
                 .findWidgetByPageId(vm.pageId)
@@ -25,9 +25,7 @@
                     vm.widgets = response.data;
                     console.log(vm.widgets);
                 })
-            $(".container").sortable(
-                {axis: "y"}
-            );
+
         }
         init();
 
@@ -42,6 +40,18 @@
             return $sce.trustAsResourceUrl(url);
 
         }
+        function sort(start, end) {
+            WidgetService.reorderWidget(vm.pageId,start, end)
+                .then(
+                    function (response) {
+                        init();
+                    },
+                    function (err) {
+                        vm.error = err;
+                    }
+                );
+        }
+
     }
     function ChooseWidgetController($routeParams,$location,WidgetService)
     {
@@ -52,22 +62,28 @@
         vm.widget={};
         vm.selectWidget=selectWidget;
         var id=vm.pageId;
+        var widget={};
         function selectWidget(widgetType)
         {
             var newWidget = {
                 "widgetType": widgetType,
-                "_id": (new Date).getTime().toString(),
-                "pageId": vm.pageId,
-                "url":"",
-                "width":""
                 };
 
             WidgetService
                 .createWidget(vm.pageId, newWidget).
             then(function(response) {
+                widget=response.data;
+                if(widget)
+                {
+                    $location.url("/user/"+vm.userId + "/website/"+vm.websiteId + "/page/" + vm.pageId + "/widget/" + widget._id);
+                }
+                else
+                {
+                    vm.error="Something went wrong";
+                }
 
             });
-            $location.url("/user/"+vm.userId + "/website/"+vm.websiteId + "/page/" + vm.pageId + "/widget/" + newWidget._id);
+
         }
     }
     function EditWidgetController($routeParams,$location,WidgetService) {
@@ -102,21 +118,23 @@
                 })
         }
 
-        function updateWidget() {
-            WidgetService
-                .updateWidget(vm.widgetId, vm.widget)
-                .then(function (response) {
-                    var result = response.data;
-                    if (response) {
-                        vm.error = "";
-                        vm.success = "Website successfully updated";
-                        $location.url("/user/"+vm.userId + "/website/"+vm.websiteId + "/page/" + vm.pageId + "/widget");
-                    } else {
-                        vm.success = "";
-                        vm.error = "Website not updated";
-                    }
-                })
-        }
+
+            function updateWidget() {
+                WidgetService
+                    .updateWidget(vm.widgetId, vm.widget)
+                    .then(function (response) {
+                        var result = response.data;
+                        if (response) {
+                            vm.error = "";
+                            vm.success = "Widget successfully updated";
+                            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget");
+                        } else {
+                            vm.success = "";
+                            vm.error = "Widget not updated";
+                        }
+                    })
+            }
+
 
         function uploadImage()
         {

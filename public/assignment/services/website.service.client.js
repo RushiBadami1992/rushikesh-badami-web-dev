@@ -23,9 +23,10 @@
 
         function createWebsite(developerId, name, desc,$http) {
             var newWebsite = {
-                name: name,
+                _user: developerId,
+                name:name,
                 description: desc,
-                developerId: developerId
+                
             };
 
             return $http.post("/api/user/"+developerId+"/website", newWebsite);

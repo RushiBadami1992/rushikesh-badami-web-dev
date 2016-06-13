@@ -38,14 +38,20 @@
         vm.createPage=createPage;
         function createPage(name,description)
         {
-            PageService
-                .createPage(name,description,vm.websiteId)
-                .then(function (response) {
-                    var newPage = sresponse.data;
-                    if (newPage) {
-                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
-                    }
-                });
+            if(name) {
+                PageService
+                    .createPage(name, description, vm.websiteId)
+                    .then(function (response) {
+                        var newPage = response.data;
+                        if (newPage) {
+                            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
+                        }
+                    });
+            }
+            else
+            {
+                vm.error="Name field is required";
+            }
         }
     }
     function EditPageController($location,$routeParams,PageService)
@@ -85,18 +91,23 @@
 
         function updatePage(pageId,page)
         {
-            PageService
-                .updatePage(id,page)
-                .then(
-                    function(response) {
-                        vm.success = "Updated website successfully";
-                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
-                    },
-                    function(error) {
-                        vm.error = "Unable to update website";
-                    }
-                );
-
+            if(page.name) {
+                PageService
+                    .updatePage(id, page)
+                    .then(
+                        function (response) {
+                            vm.success = "Updated website successfully";
+                            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
+                        },
+                        function (error) {
+                            vm.error = "Unable to update website";
+                        }
+                    );
+            }
+            else
+            {
+                vm.error="Name is required field";
+            }
 
         }
     }

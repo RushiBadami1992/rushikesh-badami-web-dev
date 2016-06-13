@@ -19,7 +19,11 @@
         </div>
     </div>
 </nav>
-<div class="container">
+<div class="container-fluid">
+    <div ng-if="model.error" class="alert alert-danger">
+        {{model.error}}
+    </div>
+
     <div ng-switch="model.widget.widgetType">
         <div ng-switch-when="HEADER">
             <ng-include src="'views/widget/widget-heading.view.client.html'">
@@ -30,6 +34,11 @@
         <div ng-switch-when="YOUTUBE">
             <ng-include src="'views/widget/widget-youtube.view.client.html'">
         </div>
+        <div ng-switch-when="HTML">
+            <ng-include src="'views/widget/widget-html.view.client.html'">
+                HTML
+        </div>
+
         <div ng-switch-when="LABEL">
             LABEL
         </div>
@@ -45,10 +54,8 @@
         <div ng-switch-when="LINK">
             LINK
         </div>
-        <div ng-switch-when="HTML">
-            HTML
-        </div>
         <div ng-switch-when="TEXT">
+        <ng-include src="'views/widget/widget-text.view.client.html'">
             TEXT
         </div>
 

@@ -8,17 +8,23 @@
             var vm = this;
 
             vm.login = function(username, password) {
-                UserService
-                    .findUserByUsernameAndPassword(username, password)
-                    .then(function(response){
-                        console.log(response);
-                        var user = response.data;
-                        if(user._id) {
-                            $location.url("/user/" + user._id);
-                        } else {
-                            vm.error = "User not found";
-                        }
-                    });
+                if(username && password) {
+                    UserService
+                        .findUserByUsernameAndPassword(username, password)
+                        .then(function (response) {
+                            console.log(response);
+                            var user = response.data;
+                            if (user) {
+                                $location.url("/user/" + user._id);
+                            } else {
+                                vm.error = "User not found";
+                            }
+                        });
+                }
+                else
+                {
+                    vm.error="Username or Password  cannot be empty"
+                }
             }
         }
         function ProfileController($location, $routeParams, UserService) {
@@ -69,15 +75,31 @@
 
         vm.register = register;
 
+
         function register(username, password, password2) {
-            UserService
-                .createUser(username, password)
-                .then(function(response){
-                    var user = response.data;
-                    if(user) {
-                        $location.url("/user/"+user._id);
-                    }
-                });
+            if(username && password && password2) {
+                if (password === password2) {
+                    UserService
+                        .createUser(username, password, password2)
+                        .then(function (response) {
+                            var user = response.data;
+                            if (user) {
+                                $location.url("/user/" + user._id);
+                            }
+                            else {
+                                vm.error = "Passwords did not match";
+                            }
+                        });
+                }
+                else
+                {
+                    vm.error="Password and verify password do not match";
+                }
+            }
+            else
+            {
+             vm.error="Usename,Password or Verify Password cannot be empty";
+            }
         }
     }
 

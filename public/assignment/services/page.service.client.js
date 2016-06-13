@@ -29,8 +29,8 @@ function PageService ($http){
     function createPage(name, description, websiteId) {
         var newPage = {
             name: name,
-            description: description,
-            websiteId: websiteId
+            title: description,
+            
         };
         return $http.post("/api/website/" + websiteId + "/page", newPage);
     }

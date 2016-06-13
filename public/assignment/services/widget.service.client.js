@@ -8,7 +8,8 @@
             findWidgetByPageId: findWidgetByPageId,
             findWidgetById: findWidgetById,
             updateWidget: updateWidget,
-            deleteWidget: deleteWidget
+            deleteWidget: deleteWidget,
+            reorderWidget:reorderWidget
         };
         return api;
 
@@ -19,6 +20,7 @@
         }
 
         function findWidgetByPageId(pageId) {
+            console.log("Page Client js");
             console.log(pageId);
             var url = "/api/page/" + pageId + "/widget";
             return $http.get(url);
@@ -37,6 +39,10 @@
         function deleteWidget(widgetID) {
             var url = "/api/widget/" + widgetID;
             return $http.delete(url);
+        }
+        function reorderWidget(start, end,pageId) {
+            var url = "/api/page/" + pageId + "/widget?start=" + start + "&end=" + end;
+            return $http.put(url);
         }
         
     }

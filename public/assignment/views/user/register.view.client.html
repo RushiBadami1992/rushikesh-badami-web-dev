@@ -1,17 +1,24 @@
 <div class="container">
+    <div ng-if="model.error" class="alert alert-danger">
+        {{model.error}}
+    </div>
+
     <h1>Register</h1>
     <input ng-model="username"
            type="text"
            class="form-control"
-           placeholder="username"/>
+           placeholder="username"/
+    required>
     <input ng-model="password"
            type="password"
            class="form-control"
-           placeholder="password"/>
+           placeholder="password"
+           required/>
     <input ng-model="password2"
            type="password"
            class="form-control"
-           placeholder="very password"/>
+           placeholder="very password"
+           required/>
     <a ng-click="model.register(username, password, password2)" class="btn btn-primary btn-block">Register</a>
     <a class="btn btn-danger  btn-block"
        href="#/login">Cancel</a>

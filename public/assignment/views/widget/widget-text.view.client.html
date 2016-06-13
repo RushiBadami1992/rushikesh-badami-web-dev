@@ -1,0 +1,50 @@
+<div class="container">
+    <h1>Text</h1>
+    <form>
+        <div class="form-group">
+            <label for="blog-post">Name</label>
+            <input type="text"
+                   class="form-control"
+                   id="widget-name"
+                   ng-model="model.widget.name"
+                   placeholder="Name"
+                   placeholder="">
+
+        </div>
+        <div class="form-group">
+            <label for="blog-title">Text</label>
+            <input type="text"
+                   class="form-control"
+                   id="widget-text"
+                   ng-model="model.widget.text"
+                   placeholder="Text"></div>
+        <div class="form-group">
+            <label for="blog-title">Rows</label>
+            <input type="text"
+                   class="form-control"
+                   id="widget-size"
+                   ng-model="model.widget.rows"
+                   placeholder="Size"></div>
+        <div class="form-group">
+            <label for="blog-title">Placeholder</label>
+            <input type="text"
+                   class="form-control"
+                   id="widget-placeholder"
+                   ng-model="model.widget.placeholder"
+                   placeholder="Placeholder"></div>
+        <div class="form-group">
+
+            <div class="input-group">
+                <input type="text"
+                       class="form-control"
+                       value="Formatted"
+                       readonly>
+                <span class="input-group-addon">
+                    <input ng-model="model.widget.formatted"
+                           type="checkbox">
+                </span>
+            </div>
+        <a class="btn btn-danger  btn-block"
+           ng-click="model.deleteWidget()" >Delete</a>
+
+</div>

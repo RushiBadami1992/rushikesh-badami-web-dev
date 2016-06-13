@@ -13,12 +13,18 @@
         };
         return api;
 
-        function createUser(username, password) {
-            var user = {
-                username: username,
-                password: password
-            };
-            return $http.post("/api/user", user);
+        function createUser(username, password,password2) {
+            if(password===password2) {
+                var user = {
+                    username: username,
+                    password: password
+                };
+                return $http.post("/api/user", user);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         function deleteUser(userId) {
