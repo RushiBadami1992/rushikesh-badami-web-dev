@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a13b27d8-96e5-4e47-a10f-461765cf9af5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/index.html" afterPath="$PROJECT_DIR$/public/assignment/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/views/widget/widget-flickr-search.view.client.html" afterPath="$PROJECT_DIR$/public/assignment/views/widget/widget-flickr-search.view.client.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/views/widget/widget-list.view.client.html" afterPath="$PROJECT_DIR$/public/assignment/views/widget/widget-list.view.client.html" />
-    </list>
+    <list default="true" id="a13b27d8-96e5-4e47-a10f-461765cf9af5" name="Default" comment="" />
     <ignored path="rushikesh-badami-web-dev.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -656,12 +652,12 @@
       <workItem from="1465598331206" duration="1491000" />
       <workItem from="1465601789603" duration="3542000" />
       <workItem from="1465749846788" duration="1882000" />
-      <workItem from="1465761907327" duration="22607000" />
+      <workItem from="1465761907327" duration="22768000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="143522000" />
+    <option name="totallyTimeSpent" value="143683000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
