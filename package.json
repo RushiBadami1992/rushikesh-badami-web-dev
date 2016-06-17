@@ -5,10 +5,14 @@
   "main": "server.js",
   "dependencies": {
     "angucomplete-alt": "^2.4.1",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "mongoose": "^4.4.15",
-    "multer": "^1.1.0"
+    "multer": "^1.1.0",
+    "passport": "^0.3.2",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {},
   "scripts": {
