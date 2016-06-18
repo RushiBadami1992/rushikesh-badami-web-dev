@@ -1,15 +1,20 @@
 var express = require('express');
 var app = express();
-
+var cookieParser = require('cookie-parser');
+var session      = require('express-session');
+var passport = require('passport');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(cookieParser());
+app.use(session({ secret: "dadadadaddasqqw" }));
+app.use(passport.initialize());
+app.use(passport.session());
 // configure a public directory to host static content
 app.use(express.static(__dirname + '/public'));
 
 //require ("./test/app.js")(app);
-var connectionString = 'mongodb://127.0.0.1:27017/test';
+var connectionString = 'mongodb://127.0.0.1:27017/cs5610summer1';
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +

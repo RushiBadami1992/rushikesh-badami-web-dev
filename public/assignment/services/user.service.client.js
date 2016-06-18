@@ -9,10 +9,16 @@
             findUserByUsernameAndPassword: findUserByUsernameAndPassword,
             findUserById: findUserById,
             updateUser: updateUser,
-            deleteUser: deleteUser
+            deleteUser: deleteUser,
+            loggedIn: loggedIn,
+            login:login,
+            logout:logout,
+            register:register
         };
         return api;
-
+        function loggedIn() {
+            return $http.get("/api/loggedIn");
+        }
         function createUser(username, password,password2) {
             if(password===password2) {
                 var user = {
@@ -26,7 +32,26 @@
                 return null;
             }
         }
-
+        function register(username, password) {
+            var user = {
+                username: username,
+                password: password
+            };
+            return $http.post("/api/register", user);
+        }
+        function logout()
+        {
+            return $http.post("/api/logout")
+                ;
+        }
+        function login(username,password)
+        {
+            var user = {
+                username: username,
+                password: password
+            };
+            return $http.post("/api/login", user);
+        }
         function deleteUser(userId) {
             var url = "/api/user/" + userId;
             return $http.delete(url);

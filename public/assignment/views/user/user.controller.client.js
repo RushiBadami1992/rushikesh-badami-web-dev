@@ -10,7 +10,7 @@
             vm.login = function(username, password) {
                 if(username && password) {
                     UserService
-                        .findUserByUsernameAndPassword(username, password)
+                        .login(username, password)
                         .then(function (response) {
                             console.log(response);
                             var user = response.data;
@@ -27,12 +27,13 @@
                 }
             }
         }
-        function ProfileController($location, $routeParams, UserService) {
+        function ProfileController($location, $routeParams, UserService,$rootScope) {
             var vm = this;
             vm.updateUser = updateUser;
             vm.unregister = unregister;
-
-            var id = $routeParams.id;
+            vm.logout=logout;
+            
+            var id = $rootScope.currentUser._id;
 
             function init() {
                 UserService
@@ -42,7 +43,17 @@
                 });
             }
             init();
-
+            function logout()
+            {
+                UserService
+                    .logout()
+                    .then(function (response){
+                        $location.url("/login");
+                    },
+                    function() {
+                        $location.url("/login");
+                    });
+            }
             function unregister() {
             UserService
                 .deleteUser(id)
@@ -80,7 +91,7 @@
             if(username && password && password2) {
                 if (password === password2) {
                     UserService
-                        .createUser(username, password, password2)
+                        .register(username, password)
                         .then(function (response) {
                             var user = response.data;
                             if (user) {
