@@ -1,7 +1,7 @@
 
 module.exports = function() {
 
-    var connectionString = 'mongodb://127.0.0.1:27017/test';
+    var connectionString = 'mongodb://localhost/cs5610summer1';
 
     if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
         connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
@@ -11,7 +11,7 @@ module.exports = function() {
             process.env.OPENSHIFT_APP_NAME;
     }
     var mongoose = require('mongoose');
-    var db = mongoose.createConnection('mongodb://localhost/cs5610summer1');
+    var db = mongoose.createConnection(connectionString);
 
     var models = {
         userModel: require("./user/user.model.server")(),
