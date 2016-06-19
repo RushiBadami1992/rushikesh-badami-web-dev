@@ -16,6 +16,7 @@
         // var website=WebsiteService.findWebsiteById(website);
         vm.deleteWebsite = deleteWebsite;
         vm.updateWebsite = updateWebsite;
+        vm.formSubmit=false;
         var id=$routeParams.websiteId;
         function init() {
             WebsiteService
@@ -45,12 +46,14 @@
         }
         //console.log(vm.website);
         function updateWebsite(website) {
+            vm.formSubmit=true;
             if(website.name) {
                 WebsiteService
                     .updateWebsite(id, website, $http)
                     .then(
                         function (response) {
                             vm.success = "Updated website successfully";
+                            vm.formSubmit=false;
                             $location.url("/user/" + vm.userId + "/website");
                         },
                         function (error) {
@@ -82,8 +85,9 @@
         var vm = this;
         vm.userId = $routeParams.userId;
         vm.createWebsite = createWebsite;
-
+        vm.formSubmit=false;
         function createWebsite(name,description) {
+            vm.formSubmit=true;
             if(name) {
                 WebsiteService
                     .createWebsite(vm.userId, name, description, $http)
@@ -91,6 +95,7 @@
                         var website = response.data;
                         console.log("In this function");
                         if (website) {
+                            vm.formSubmit=false;
                             $location.url("/user/" + website._user + "/website");
                         }
                     });

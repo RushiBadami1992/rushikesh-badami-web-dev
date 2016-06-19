@@ -25,15 +25,19 @@
             {{model.error}}
         </div>
 
-        <form>
-            <div class="form-group">
+        <form name="myform"  role="form">
+            <div class="form-group" ng-class="{ 'has-error': myform.name.$error.required && model.formSubmit}">
                 <label for="name">Website Name</label>
                 <input ng-model="model.website.name"
                         type="text"
                        class="form-control"
                        id="name"
-
-                       placeholder="Google">
+                        name="name"
+                       placeholder="Google"
+                required>
+            <span ng-show="myform.name.$error.required && model.formSubmit" class="help-block">
+                Website name is required
+            </span>
             </div>
             <div class="form-group">
                 <label for="website-description">Website Description</label>
@@ -59,7 +63,7 @@
             <div class="col-xs-3 text-center">
             </div>
             <div class="col-xs-3 text-center">
-                <a href="#/user/{{model.userId}}">
+                <a href="#/user">
                     <span class="glyphicon glyphicon-user"></span>
                 </a>
             </div>

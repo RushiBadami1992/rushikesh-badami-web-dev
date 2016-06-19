@@ -6,8 +6,9 @@
             .controller("RegisterController",RegisterController);
         function LoginController($location, UserService) {
             var vm = this;
-
+            vm.formSubmit=false;
             vm.login = function(username, password) {
+                vm.formSubmit=true;
                 if(username && password) {
                     UserService
                         .login(username, password)
@@ -15,6 +16,7 @@
                             console.log(response);
                             var user = response.data;
                             if (user) {
+                                vm.formSubmit=false;
                                 $location.url("/user");
                             } else {
                                 vm.error = "User not found";
@@ -85,9 +87,10 @@
         var vm = this;
 
         vm.register = register;
-
+        vm.formSubmit=false;
 
         function register(username, password, password2) {
+            vm.formSubmit=true;
             if(username && password && password2) {
                 if (password === password2) {
                     UserService
@@ -95,12 +98,18 @@
                         .then(function (response) {
                             var user = response.data;
                             if (user) {
+                                vm.formSubmit=false;
                                 $location.url("/user");
+
                             }
                             else {
-                                vm.error = "Passwords did not match";
+                                vm.error = "Username already taken";
                             }
-                        });
+
+                        },
+                            function (error) {
+                                vm.error = "Username already taken";
+                            });
                 }
                 else
                 {

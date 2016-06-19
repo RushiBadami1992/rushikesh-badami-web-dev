@@ -92,7 +92,7 @@
         vm.userId = $routeParams.userId;
         vm.pageId = $routeParams.pageId;
         vm.widgetId = $routeParams.widgetId;
-
+        vm.formSubmit=false;
         vm.deleteWidget = deleteWidget;
         vm.updateWidget = updateWidget;
         console.log("Widget"+vm.widgetId);
@@ -120,19 +120,28 @@
 
 
             function updateWidget() {
-                WidgetService
-                    .updateWidget(vm.widgetId, vm.widget)
-                    .then(function (response) {
-                        var result = response.data;
-                        if (response) {
-                            vm.error = "";
-                            vm.success = "Widget successfully updated";
-                            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget");
-                        } else {
-                            vm.success = "";
-                            vm.error = "Widget not updated";
-                        }
-                    })
+                vm.formSubmit=true;
+                console.log(vm.widget);
+                if(vm.widget.text) {
+                    WidgetService
+                        .updateWidget(vm.widgetId, vm.widget)
+                        .then(function (response) {
+                            var result = response.data;
+                            if (response) {
+                                vm.error = "";
+                                vm.success = "Widget successfully updated";
+                                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget");
+                                vm.formSubmit=false;
+                            } else {
+                                vm.success = "";
+                                vm.error = "Widget not updated";
+                            }
+                        })
+                }
+                else {
+
+                    vm.error="Name is a mandatory field";
+                }
             }
 
 

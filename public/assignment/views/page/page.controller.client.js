@@ -36,8 +36,10 @@
         vm.userId=$routeParams.userId;
         vm.websiteId=$routeParams.websiteId;
         vm.createPage=createPage;
+        vm.formSubmit=false;
         function createPage(name,description)
         {
+            vm.formSubmit=true;
             if(name) {
                 PageService
                     .createPage(name, description, vm.websiteId)
@@ -45,6 +47,7 @@
                         var newPage = response.data;
                         if (newPage) {
                             $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
+                            vm.formSubmit=false;
                         }
                     });
             }
@@ -61,6 +64,7 @@
         vm.websiteId=$routeParams.websiteId;
         vm.pageId=$routeParams.pageId;
         vm.deletePage=deletePage;
+        vm.formSubmit=false;
         vm.updatePage=updatePage;
         var id=$routeParams.pageId;
 
@@ -81,6 +85,7 @@
                         //console.log("Delete Working");
                         vm.success="Updated Website successfully"
                         $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+
                     },
                     function(error) {
                         vm.error = "Unable to remove website"
@@ -91,13 +96,16 @@
 
         function updatePage(pageId,page)
         {
+            vm.formSubmit=true;
             if(page.name) {
+
                 PageService
                     .updatePage(id, page)
                     .then(
                         function (response) {
                             vm.success = "Updated website successfully";
                             $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
+                            vm.formSubmit=false;
                         },
                         function (error) {
                             vm.error = "Unable to update website";
