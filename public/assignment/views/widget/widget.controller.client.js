@@ -121,8 +121,17 @@
 
             function updateWidget() {
                 vm.formSubmit=true;
-                console.log(vm.widget);
-                if(vm.widget.text) {
+
+                var boolean=true;
+                console.log(vm.widget.widgetType);
+                console.log(vm.widget.name);
+                if(vm.widget.widgetType==="HTML" && vm.widget.name===null)
+                {
+                    boolean=false;
+                }
+                console.log(boolean);
+                if((vm.widget.text && vm.widget.name) && boolean) {
+
                     WidgetService
                         .updateWidget(vm.widgetId, vm.widget)
                         .then(function (response) {
@@ -140,7 +149,7 @@
                 }
                 else {
 
-                    vm.error="Name is a mandatory field";
+                    vm.error="Name and Text is a mandatory field";
                 }
             }
 
