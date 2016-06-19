@@ -77,7 +77,11 @@ module.exports = function(app, models) {
             .findUserByUsername(username)
             .then(
                 function (user) {
+                    console.log('In done');
+                    console.log(user);
+                    console.log('In done 2');
                     if(user && bcrypt.compareSync(password, user.password)) {
+                        console.log("Found user");
                         done(null, user);
                     } else {
                         done(null, false);
@@ -156,6 +160,7 @@ module.exports = function(app, models) {
     }
     function login(req, res) {
         var user=req.user;
+        console.log("In login");
         res.json(user);
     }
 
